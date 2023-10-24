@@ -45,3 +45,48 @@ const company: StringArray = {
 interface SalaryMap {
   [level: string]: string;
 }
+
+//! 인터페이스의 활용 - 백엔드와의 인터페이스 정의
+
+// 에러 방지를 위한 함수 정의
+const axios = {
+  id: "axios",
+  get: (param: any) => {
+    return param;
+  },
+};
+//1. JSDoc을 이용한 방법
+/**
+ * @typeof {Object} User
+ * @property {string} id - 사용자 아이디
+ * @property {string} name - 사용자 이름
+ */
+
+/**
+ * @returns {User} 1번 사용자
+ */
+function fetchData() {
+  return axios.get("http://localhost:3000/users/1");
+}
+
+// 2. 타입 별칭을 이용한 방법
+// 2-1.타입 별칭으로 API 함수의 응답 형태 정의
+type TAUser = {
+  id: string;
+  name: string;
+};
+
+function fetchDataTA(): TAUser {
+  return axios.get("http://localhost:3000/users/1");
+}
+
+// 2-2. 인터페이스로 API 함수의 응답 형태 정의
+//* API Response 데이터 구조 변경시 상속이나 선언 병합을 통한 확장을 고려하면 인터페이스가 더 유연하게 타입을 확장할 수 있는 장점이 있다.
+interface IUser {
+  id: string;
+  name: string;
+}
+
+function fetchDataIF(): IUser {
+  return axios.get("");
+}
